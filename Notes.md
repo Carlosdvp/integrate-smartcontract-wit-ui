@@ -33,4 +33,22 @@ Contract deployed to 0x882F7c43f96d2bDFc24da1480E95aF4301aD774C
 
 ## Read the init message
 
+## Update the message
 
+---------------------------------------------------------------------------------------------------------------------------
+
+# III -- Publish  Your Smart Contract to Etherscan
+
+By verifying your smart contract on Etherscan, anyone can view your source code and interact with your smart contract.
+
+## Generate an API Key on your Etherscan account
+
+## With Hardhat-deployed smart contracts
+
+### Verify your smart contract on Etherscan!
+
+----------------------------------------------------------------------------------------------------------------------------
+
+# IV: Connecting your smart contract to a frontend project
+
+## 1: Clone the starter files
