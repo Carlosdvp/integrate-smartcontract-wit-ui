@@ -29,4 +29,8 @@ Contract deployed to 0x882F7c43f96d2bDFc24da1480E95aF4301aD774C
 
 # II -- Interact with the Smart Contract
 
+## Grab your contract ABI
+
+## Read the init message
+
 
