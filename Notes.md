@@ -52,3 +52,9 @@ By verifying your smart contract on Etherscan, anyone can view your source code 
 # IV: Connecting your smart contract to a frontend project
 
 ## 1: Clone the starter files
+
+## Install Vite and create a new react project to build the FE
+
+- install TailwindCSS
+
+## 
