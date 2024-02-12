@@ -57,4 +57,11 @@ By verifying your smart contract on Etherscan, anyone can view your source code 
 
 - install TailwindCSS
 
-## 
+## 2. HelloWorld component setup
+
+## 3. Read from your smart contract
+
+## 4. Loading your Hello World smart contract
+
+To load your Hello World smart contract, you'll need its contract address and ABI
+
