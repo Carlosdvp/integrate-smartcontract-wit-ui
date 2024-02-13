@@ -13,6 +13,7 @@ const helloWorldContractAddress = VITE_CONTRACT_ADDRESS;
 export const helloworldContract = new ethers.BaseContract(helloWorldContractAddress, helloWorldAbi, provider);
 
 export const loadCurrentMessage = async () => {
+  
 };
 
 export const connectWallet = async () => {

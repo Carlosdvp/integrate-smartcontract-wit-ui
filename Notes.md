@@ -65,3 +65,7 @@ By verifying your smart contract on Etherscan, anyone can view your source code 
 
 To load your Hello World smart contract, you'll need its contract address and ABI
 
+### Implementing loadCurrentMessage in your interact.js file
+
+This function is super simple. We're going to make a simple async call to read from our contract. 
+
