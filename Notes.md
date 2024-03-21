@@ -69,3 +69,11 @@ To load your Hello World smart contract, you'll need its contract address and AB
 
 This function is super simple. We're going to make a simple async call to read from our contract. 
 
+NOTE: do not use dotend on the FE, Vite will ahndle the env variables for us, just use import.meta.env to get them.
+
+### Implement addSmartContractListener
+
+The addSmartContractListener function is going to specifically listen for our Hello World smart contract's UpdatedMessages event, and update our UI to display the new message.
+
+## 5. Set up your Ethereum wallet and Connect Metamask to your UI
+

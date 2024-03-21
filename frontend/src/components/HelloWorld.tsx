@@ -16,11 +16,22 @@ export const HelloWorld: FC = () => {
   const [message, setMessage] = useState("No connection to the network.");
   const [newMessage, setNewMessage] = useState("");
 
-  // useEffect(async () => {
-    
-  // }, []);
+  useEffect(() => {
+    const loadMessage = async () => {
+      const message = await loadCurrentMessage();
+      setMessage(message);
+    };
+  
+    loadMessage();
+    addSmartContractListener();
+  }, []);
+
   function addSmartContractListener() {
-    return;
+    helloworldContract.on('UpdateMessages', (data, event) => {
+      setMessage(data.returnValues[1]);
+      setNewMessage("");
+      setStatus("Your message has been updated!");
+    })
   }
 
   function addWalletListener() {
