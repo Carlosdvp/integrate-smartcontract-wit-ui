@@ -77,3 +77,8 @@ The addSmartContractListener function is going to specifically listen for our He
 
 ## 5. Set up your Ethereum wallet and Connect Metamask to your UI
 
+The connectWallet function
+In our interact.js file, let's implement the connectWallet function, which we can then call in our HelloWorld.js component.
+
+- there are some functions that we don't need when using the WalletConnect sdk
+  - for example: getCurrentWalletConnected, connectWalletPressed and connectWallet

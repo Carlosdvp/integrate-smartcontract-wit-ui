@@ -1,17 +1,25 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
+import { createWeb3Modal } from '@web3modal/ethers/react';
 
 import {
   helloworldContract,
-  connectWallet,
   updateMessage,
   loadCurrentMessage,
   getCurrentConnectedWallet,
+  ethersConfig,
+  mainnet,
+  testnet,
+  projectId
 } from "@/utils/interactions.ts";
-
 import logo from '@/assets/bro.png'
 
+createWeb3Modal({
+  ethersConfig,
+  chains: [mainnet, testnet],
+  projectId
+})
+
 export const HelloWorld: FC = () => {
-  const [walletAddress, setWalletAddress] = useState("");
   const [status, setStatus] = useState("");
   const [message, setMessage] = useState("No connection to the network.");
   const [newMessage, setNewMessage] = useState("");
@@ -38,31 +46,20 @@ export const HelloWorld: FC = () => {
     return;
   }
 
-  const connectWalletPressed = async () => {
+  const ConnectButton = () => {
+    return <w3m-button />
   }
 
   const onUpdatePressed = async () => {}
 
   return (
     <div id='container' 
-      className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[450px] h-[50vh] border-4 border-blue-900 shadow p-6'
+      className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[550px] h-[50vh] border-4 border-blue-900 shadow p-6'
     >
       <div className='flex justify-between items-center h-[10%] my-7'>
         <img id='logo' src={logo} className='w-18 h-16' />
-        <button 
-          id='walletButton'
-          onClick={connectWalletPressed} 
-          className='border-4 border-blue-600 text-blue-800 bg-white hover:bg-blue-200 hover:text-black rounded-none p-2 px-4 font-semibold'
-        >
-          {walletAddress.length > 0 ? (
-            "Connected: " +
-            String(walletAddress).substring(0, 6) +
-            "..." +
-            String(walletAddress).substring(38)
-          ) : (
-            <span>Connect Wallet</span>
-          )}
-        </button>
+
+        <ConnectButton />
       </div>
 
       <h2 className='mt-10 py-2 text-xl font-bold'>Current Message:</h2>
