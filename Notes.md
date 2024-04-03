@@ -110,3 +110,9 @@ Naturally, it makes sense to have some sort of input error handling at the start
 - cleaned up the helper method and added the walletProvider as a param to the update function
 
 With these changes now the app works, and I am able to update the message in the smart contract deployed to sepolia paying the tx fee with metamask.
+
+## Some Ideas for Improvement
+
+- found a couple of bugs
+  - my message validation is not working, I was able to save an empty string as the message
+  - and that broke the app, as there was no message it would not let me update it through the UI, I had to add a message directly on the contract through etherscan.

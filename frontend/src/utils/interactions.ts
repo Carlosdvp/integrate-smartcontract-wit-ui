@@ -1,8 +1,8 @@
-import { ethers,BrowserProvider } from 'ethers';
-import { defaultConfig, useWeb3ModalAccount, useWeb3ModalProvider } from '@web3modal/ethers/react'
+import { ethers } from 'ethers';
+import { defaultConfig, useWeb3ModalAccount } from '@web3modal/ethers/react'
 
 import helloWorld from './HelloWorld.json'
-import { Eip1193Provider, JsonRpcSigner, TransactionReceipt } from 'ethers/providers';
+import { Eip1193Provider } from 'ethers/providers';
 
 const {
   VITE_SEPOLIA_URL,
@@ -13,7 +13,6 @@ const {
 const provider = new ethers.JsonRpcProvider(VITE_SEPOLIA_URL);
 const helloWorldAbi = helloWorld.abi;
 const helloWorldContractAddress = VITE_CONTRACT_ADDRESS;
-// const signer = provider.getSigner();
 
 export const helloworldContract: ethers.Contract = new ethers.Contract(helloWorldContractAddress, helloWorldAbi, provider);
 
@@ -32,7 +31,7 @@ export const getCurrentConnectedWallet = async () => {
   }
 }
 
-export const updateMessage = async (address: string, message: string, walletProvider: Eip1193Provider) => {
+export const updateMessage = async (message: string, walletProvider: Eip1193Provider) => {
 
   let transactionParams;
   let data;

@@ -33,9 +33,13 @@ export const HelloWorld: FC = () => {
     }
   }, [address])
 
+  function getWalletAddress() {
+    return walletAddress;
+  }
+
   function addSmartContractListener() {
     helloworldContract.on('UpdateMessages', (data, event) => {
-      let savedEvent = event;
+      console.log('event:', event);
 
       setMessage(data.returnValues[1]);
       setNewMessage("");
@@ -56,7 +60,7 @@ export const HelloWorld: FC = () => {
 
     try {
       if (walletProvider) {
-        const updatedResult = await updateMessage(walletAddress, newMessage, walletProvider);
+        const updatedResult = await updateMessage(newMessage, walletProvider);
 
         if (updatedResult) {
           const { status } = updatedResult;
@@ -79,6 +83,7 @@ export const HelloWorld: FC = () => {
   
     loadMessage();
     addSmartContractListener();
+    getWalletAddress();
   }, []);
 
   return (
