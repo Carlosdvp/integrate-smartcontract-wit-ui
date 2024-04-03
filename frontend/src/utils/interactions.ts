@@ -1,7 +1,8 @@
-import { ethers } from 'ethers';
-import { createWeb3Modal, defaultConfig } from '@web3modal/ethers/react'
+import { ethers,BrowserProvider } from 'ethers';
+import { defaultConfig, useWeb3ModalAccount, useWeb3ModalProvider } from '@web3modal/ethers/react'
 
 import helloWorld from './HelloWorld.json'
+import { Eip1193Provider, JsonRpcSigner, TransactionReceipt } from 'ethers/providers';
 
 const {
   VITE_SEPOLIA_URL,
@@ -12,6 +13,7 @@ const {
 const provider = new ethers.JsonRpcProvider(VITE_SEPOLIA_URL);
 const helloWorldAbi = helloWorld.abi;
 const helloWorldContractAddress = VITE_CONTRACT_ADDRESS;
+// const signer = provider.getSigner();
 
 export const helloworldContract: ethers.Contract = new ethers.Contract(helloWorldContractAddress, helloWorldAbi, provider);
 
@@ -21,14 +23,49 @@ export const loadCurrentMessage = async () => {
   return message;
 };
 
-export const getCurrentConnectedWallet = async () => {};
+export const getCurrentConnectedWallet = async () => {
+  const { address } = useWeb3ModalAccount();
 
-export const updateMessage = async () => {};
+  if (address) {
+    console.log('address: ', address)
+    return address;
+  }
+}
+
+export const updateMessage = async (address: string, message: string, walletProvider: Eip1193Provider) => {
+
+  let transactionParams;
+  let data;
+
+  const browserProvider = new ethers.BrowserProvider(walletProvider)
+  const signer = await browserProvider.getSigner();
+  const contract: ethers.Contract = new ethers.Contract(helloWorldContractAddress, helloWorldAbi, signer);
+
+  // encode the function call data
+  data = contract.interface.encodeFunctionData('update', [message]);
+
+  // set up transaction parameters
+  transactionParams = {
+    to: VITE_CONTRACT_ADDRESS,
+    data: data
+  }
+
+  // Sign the transaction
+  const txResponse = await signer.sendTransaction(transactionParams);
+
+  // Get the transaction hash
+  const txHash = txResponse.hash;
+
+  return {
+    status: "success",
+    txHash: txHash
+  }
+};
 
 // 1. Get the project id
 export const projectId = VITE_WALLET_CONNECT_KEY;
 
-// 2. Set chains
+// 2. Set chain id's
 export const mainnet = {
   chainId: 1,
   name: 'Ethereum',

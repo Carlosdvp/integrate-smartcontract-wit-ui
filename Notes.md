@@ -82,3 +82,31 @@ In our interact.js file, let's implement the connectWallet function, which we ca
 
 - there are some functions that we don't need when using the WalletConnect sdk
   - for example: getCurrentWalletConnected, connectWalletPressed and connectWallet
+
+### Implement addWalletListener
+
+The final step in our dApp wallet setup is implementing the wallet listener so our UI updates when our wallet's state changes, such as when the user disconnects or switches accounts.
+
+- WalletConnect's sdk also handles this for us, we don;t need to add any new code so we can skip this method as well
+- if we change network or disconnect our wallet the new info will be updated automatically
+
+## Step 6: Implement the updateMessage function
+
+In the updateMessage of your interact.js file, we're going to do the following:
+
+  - Make sure the message we wish to publish in our smart contact is valid
+  - Sign our transaction using Metamask
+  - Call this function from our HelloWorld.js frontend component
+
+### Input error handling
+
+Naturally, it makes sense to have some sort of input error handling at the start of the function.
+
+-------------------------------------------------------------------------------------------------
+
+# Final Adjustments
+
+- moved the creation of the walletProvider to the main component and out of the helper method
+- cleaned up the helper method and added the walletProvider as a param to the update function
+
+With these changes now the app works, and I am able to update the message in the smart contract deployed to sepolia paying the tx fee with metamask.

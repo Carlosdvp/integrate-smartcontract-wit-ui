@@ -1,11 +1,10 @@
 import { FC, useEffect, useState } from 'react';
-import { createWeb3Modal } from '@web3modal/ethers/react';
+import { createWeb3Modal, useWeb3ModalAccount, useWeb3ModalProvider } from '@web3modal/ethers/react';
 
 import {
   helloworldContract,
   updateMessage,
   loadCurrentMessage,
-  getCurrentConnectedWallet,
   ethersConfig,
   mainnet,
   testnet,
@@ -20,9 +19,57 @@ createWeb3Modal({
 })
 
 export const HelloWorld: FC = () => {
+  const [walletAddress, setWalletAddress] = useState("");
   const [status, setStatus] = useState("");
   const [message, setMessage] = useState("No connection to the network.");
   const [newMessage, setNewMessage] = useState("");
+
+  const { address } = useWeb3ModalAccount();
+  const { walletProvider } = useWeb3ModalProvider();
+
+  useEffect(() => {
+    if (address) {
+      setWalletAddress(address);
+    }
+  }, [address])
+
+  function addSmartContractListener() {
+    helloworldContract.on('UpdateMessages', (data, event) => {
+      let savedEvent = event;
+
+      setMessage(data.returnValues[1]);
+      setNewMessage("");
+      setStatus("Your message has been updated!");
+    })
+  }
+
+  const ConnectButton = () => {
+    return <w3m-button />
+  }
+
+  const onUpdatePressed = async () => {
+    if (message.trim() === "") {
+      return {
+        status: "Your message can't be an empty string."
+      }
+    }
+
+    try {
+      if (walletProvider) {
+        const updatedResult = await updateMessage(walletAddress, newMessage, walletProvider);
+
+        if (updatedResult) {
+          const { status } = updatedResult;
+          setStatus(status);
+        } 
+      }
+    } catch (error) {
+      return { 
+        status: "error",
+        error: (error as Error).message
+      }
+    } 
+  }
 
   useEffect(() => {
     const loadMessage = async () => {
@@ -34,27 +81,10 @@ export const HelloWorld: FC = () => {
     addSmartContractListener();
   }, []);
 
-  function addSmartContractListener() {
-    helloworldContract.on('UpdateMessages', (data, event) => {
-      setMessage(data.returnValues[1]);
-      setNewMessage("");
-      setStatus("Your message has been updated!");
-    })
-  }
-
-  function addWalletListener() {
-    return;
-  }
-
-  const ConnectButton = () => {
-    return <w3m-button />
-  }
-
-  const onUpdatePressed = async () => {}
-
   return (
-    <div id='container' 
-      className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[550px] h-[50vh] border-4 border-blue-900 shadow p-6'
+    <div 
+      id='container' 
+      className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[550px] h-[50vh] min-h-[450px] border-4 border-blue-900 shadow p-6'
     >
       <div className='flex justify-between items-center h-[10%] my-7'>
         <img id='logo' src={logo} className='w-18 h-16' />
