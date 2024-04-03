@@ -116,3 +116,7 @@ With these changes now the app works, and I am able to update the message in the
 - found a couple of bugs
   - my message validation is not working, I was able to save an empty string as the message
   - and that broke the app, as there was no message it would not let me update it through the UI, I had to add a message directly on the contract through etherscan.
+
+- also message does not update when I change it unless I refresh the page:
+  - this could be an additional feature
+
